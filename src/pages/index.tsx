@@ -16,14 +16,14 @@ export default function Home() {
         <button onClick={() => (session ? signOut() : signIn("google"))}>
           {session ? "Sign out" : "Sign in"}
         </button>
-        {!userDays?.length && (
+        {!userDays?.length && session && (
           <div className="flex flex-col gap-2">
-            <p className="text-3xl font-semibold">
+            <p className="text-2xl font-semibold sm:text-3xl">
               You still don't have a weekly routine.
             </p>
             <button
               onClick={() => daysReset.mutate()}
-              className="rounded bg-violet-600 py-2 hover:bg-violet-700">
+              className="rounded bg-violet-600 py-2 text-xl font-semibold hover:bg-violet-700">
               Create routine
             </button>
           </div>
