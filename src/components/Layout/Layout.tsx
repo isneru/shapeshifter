@@ -1,20 +1,22 @@
 import Head from "next/head"
+import { ModalProvider } from "~/utils/providers"
 
 interface LayoutProps {
-  title: string
-  description: string
   children: React.ReactNode
 }
 
-export const Layout = ({ title, description, children }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
+        <title>Shape Shifter</title>
+        <meta
+          name="description"
+          content="Your intuitive tool to manage a weekly routine."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {children}
+      <ModalProvider>{children}</ModalProvider>
     </>
   )
 }
