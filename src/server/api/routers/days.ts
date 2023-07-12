@@ -1,3 +1,4 @@
+import { z } from "zod"
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc"
 
 export const daysRouter = createTRPCRouter({
@@ -36,6 +37,9 @@ export const daysRouter = createTRPCRouter({
     return await ctx.prisma.day.findMany({
       where: {
         userId: ctx.session.user.id
+      },
+      include: {
+        dayFields: true
       }
     })
   }),
@@ -43,6 +47,9 @@ export const daysRouter = createTRPCRouter({
     const userDays = await ctx.prisma.day.findMany({
       where: {
         userId: ctx.session.user.id
+      },
+      include: {
+        dayFields: true
       }
     })
 
@@ -86,5 +93,26 @@ export const daysRouter = createTRPCRouter({
         ]
       })
     }
-  })
+  }),
+  createDayfield: protectedProcedure
+    .input(
+      z.object({
+        dayId: z.string(),
+        value: z.string(),
+        observation: z.string()
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.dayField.create({
+        data: {
+          value: input.value,
+          observation: input.observation,
+          day: {
+            connect: {
+              id: input.dayId
+            }
+          }
+        }
+      })
+    })
 })
