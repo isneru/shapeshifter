@@ -1,14 +1,13 @@
-import { Fingerprint } from "lucide-react"
+import { DoorOpenIcon, Fingerprint } from "lucide-react"
 import { signIn, signOut, useSession } from "next-auth/react"
 import Head from "next/head"
 import { ModalProvider } from "~/utils/providers"
 
 interface LayoutProps {
   children: React.ReactNode
-  isLoading?: boolean
 }
 
-export const Layout = ({ children, isLoading = false }: LayoutProps) => {
+export const Layout = ({ children }: LayoutProps) => {
   const { data: session } = useSession()
 
   return (
@@ -25,9 +24,9 @@ export const Layout = ({ children, isLoading = false }: LayoutProps) => {
         <button
           className="fixed bottom-4 right-4 rounded-lg border-[0.5px] border-white/10 bg-neutral-800 p-2 transition-colors hover:bg-neutral-700"
           onClick={() => (session ? signOut() : signIn("google"))}>
-          <Fingerprint />
+          {session ? <DoorOpenIcon /> : <Fingerprint />}
         </button>
-        {isLoading && (
+        {/* {isLoading && (
           <div className="fixed inset-0 z-50 grid h-screen w-screen place-items-center bg-neutral-900 text-violet-600">
             <svg
               width={80}
@@ -39,7 +38,7 @@ export const Layout = ({ children, isLoading = false }: LayoutProps) => {
               </g>
             </svg>
           </div>
-        )}
+        )} */}
         {children}
       </ModalProvider>
     </>

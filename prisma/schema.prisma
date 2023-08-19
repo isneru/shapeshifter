@@ -1,11 +1,11 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["jsonProtocol"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
 // Necessary for Next auth
@@ -25,6 +25,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -33,6 +34,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
@@ -43,7 +46,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    days          Day[]
+    weeks         Week[]
 }
 
 model VerificationToken {
@@ -54,7 +57,7 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model DayField {
+model Field {
     id          String   @id @default(cuid())
     value       String
     observation String?
@@ -68,14 +71,26 @@ model DayField {
 }
 
 model Day {
-    id        String     @id @default(cuid())
-    value     String // Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
-    dayFields DayField[]
+    id        String   @id @default(cuid())
+    fields    Field[]
     userId    String
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    Week      Week?    @relation(fields: [weekId], references: [id])
+    weekId    String?
 
-    user User @relation(fields: [userId], references: [id])
+    @@index([userId])
+    @@index([weekId])
+}
+
+model Week {
+    id        String   @id @default(cuid())
+    userId    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    days Day[]
+    user User  @relation(fields: [userId], references: [id])
 
     @@index([userId])
 }

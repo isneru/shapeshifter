@@ -8,24 +8,24 @@ interface ModalProps {
 }
 
 export const WeeklyResetModal = ({ isOpen, setIsOpen }: ModalProps) => {
-  const daysReset = api.days.createWeeklyRoutine.useMutation()
+  const { mutate: confirmReset } = api.weeks.createWeek.useMutation()
   const { data: session } = useSession()
-  const { data: userDays } = api.days.getUserDays.useQuery(undefined, {
+  const { data: userWeek } = api.weeks.getUserWeek.useQuery(undefined, {
     enabled: !!session?.user.id
   })
 
-  function handleResetDayFields() {
+  function handleResetWeek() {
     setIsOpen(false)
     if (session?.user.id) {
-      daysReset.mutate()
+      confirmReset()
     }
   }
 
-  function handleKeepDayFields() {
+  function handleKeepWeek() {
     setIsOpen(false)
   }
 
-  if (!userDays?.length) return null
+  if (!userWeek) return null
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -36,12 +36,12 @@ export const WeeklyResetModal = ({ isOpen, setIsOpen }: ModalProps) => {
           </Dialog.Title>
           <div className="mt-auto flex w-full flex-col items-center gap-3 font-semibold">
             <button
-              onClick={handleResetDayFields}
+              onClick={handleResetWeek}
               className="flex w-full items-center justify-center rounded bg-neutral-800 py-2 outline-none transition-colors">
               Create New Activities
             </button>
             <button
-              onClick={handleKeepDayFields}
+              onClick={handleKeepWeek}
               className="flex w-full items-center justify-center rounded bg-violet-600 py-2 outline-none transition-colors hover:bg-violet-700">
               Repeat Activities
             </button>

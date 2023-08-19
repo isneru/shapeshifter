@@ -1,19 +1,19 @@
-import { Edit } from "lucide-react"
 import { ChangeEvent, KeyboardEvent, useState } from "react"
 import { RouterOutputs, api } from "~/utils/api"
+import { weekHelper } from "~/utils/week"
 
 interface WeeklyViewProps {
-  userDays: RouterOutputs["days"]["getUserDays"] | undefined
+  week: RouterOutputs["weeks"]["getUserWeek"] | undefined
 }
 
-export const WeeklyView = ({ userDays }: WeeklyViewProps) => {
+export const WeeklyView = ({ week }: WeeklyViewProps) => {
   const [fields, setFields] = useState(
     Array.from({ length: 7 }, () => ({ isEditing: false, value: "", obs: "" }))
   )
 
-  const daysUpdate = api.days.createDayfield.useMutation()
+  const daysUpdate = api.weeks.createField.useMutation()
 
-  function toggleIsAddingField(dayIdx: number) {
+  function toggleField(dayIdx: number) {
     setFields(prevState => {
       return prevState.map((field, idx) => {
         return idx === dayIdx
@@ -49,62 +49,29 @@ export const WeeklyView = ({ userDays }: WeeklyViewProps) => {
     e: KeyboardEvent<HTMLInputElement>,
     dayIdx: number
   ) {
-    if (e.key !== "Enter" || !userDays) return
+    if (e.key !== "Enter" || !week) return
 
     daysUpdate.mutate({
-      dayId: userDays![dayIdx]!.id,
+      dayId: week!.days[dayIdx]!.id,
       value: fields[dayIdx]!.value,
       observation: fields[dayIdx]!.obs
     })
   }
 
-  return userDays?.length ? (
-    <div className="grid grid-cols-7 gap-4 overflow-x-auto">
-      {userDays.map((day, idx) => (
-        <div
-          key={day.id}
-          className="group/item flex flex-col gap-2 rounded-lg bg-white/5 p-2">
-          <span className="inline-flex items-center font-semibold">
-            {day.value}
-            <button
-              onClick={() => toggleIsAddingField(idx)}
-              className="group/color ml-auto flex">
-              <Edit
-                className="opacity-0 transition-colors group-hover/color:text-violet-500 group-hover/item:opacity-100"
-                strokeWidth={2}
-              />
-            </button>
+  if (!week || !week.days.length) return null
+
+  return (
+    <div className="grid w-full grid-cols-1 gap-4 overflow-x-auto p-4 lg:grid-cols-7">
+      {week.days.map((day, idx) => (
+        <div>
+          <span className="mb-2 inline-flex w-full items-center justify-center font-semibold lg:justify-start">
+            {weekHelper[idx]}
           </span>
-          {fields[idx]!.isEditing && (
-            <>
-              <input
-                autoFocus
-                placeholder="Title"
-                className="rounded bg-neutral-900 p-1 outline-none"
-                type="text"
-                value={fields[idx]?.value}
-                onChange={e => handleInputValueChange(e, idx)}
-              />
-              <input
-                onKeyDown={e => handleInputKeyDown(e, idx)}
-                placeholder="Observation"
-                className="rounded bg-neutral-900 p-1 outline-none"
-                type="text"
-                value={fields[idx]?.obs}
-                onChange={e => handleInputObsChange(e, idx)}
-              />
-            </>
-          )}
-          {day.dayFields.map(field => (
-            <div
-              key={field.id}
-              className="flex flex-col gap-1 rounded-lg bg-neutral-900 p-2">
-              <span className="font-semibold">{field.value}</span>
-              <span className="text-sm">{field.observation}</span>
-            </div>
-          ))}
+          <div
+            key={day.id}
+            className="group/item flex aspect-video flex-col gap-2 rounded-lg bg-white/5 p-2"></div>
         </div>
       ))}
     </div>
-  ) : null
+  )
 }

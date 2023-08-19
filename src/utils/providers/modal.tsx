@@ -19,7 +19,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const { data: session } = useSession()
 
   const { data: isWeekResetEligible } =
-    api.days.getWeekResetEligibility.useQuery(undefined, {
+    api.weeks.getWeekResetEligibility.useQuery(undefined, {
       enabled: !!session?.user.id
     })
 

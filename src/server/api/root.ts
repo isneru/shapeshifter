@@ -1,4 +1,4 @@
-import { daysRouter } from "~/server/api/routers/days"
+import { weeksRouter } from "~/server/api/routers/weeks"
 import { createTRPCRouter } from "~/server/api/trpc"
 
 /**
@@ -7,7 +7,7 @@ import { createTRPCRouter } from "~/server/api/trpc"
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  days: daysRouter
+  weeks: weeksRouter
 })
 
 // export type definition of API
