@@ -1,6 +1,7 @@
 import { AuthButton } from "@/components/client"
 import { authOptions } from "@/lib/auth"
 import { getServerSession } from "next-auth"
+import Image from "next/image"
 
 export const Navbar = async () => {
   const session = await getServerSession(authOptions)
@@ -12,10 +13,12 @@ export const Navbar = async () => {
       >
         {!!session ? "Sign out" : "Sign in"}
         {session?.user.image && (
-          <img
-            src={session.user.image}
+          <Image
             className="h-8 w-8 rounded-full"
-            alt=""
+            src={session.user.image}
+            alt={session.user.name!}
+            width={32}
+            height={32}
           />
         )}
       </AuthButton>

@@ -35,7 +35,7 @@ export const WeekResetModal = ({
                 onClick={() => repeatWeek(userId).then(router.refresh)}
                 className="flex w-full items-center justify-center rounded bg-violet-600 py-2 outline-none transition-colors hover:bg-violet-700"
               >
-                Repeat Last Week's Activities
+                Repeat Last Week&apos;s Activities
               </button>
             )}
           </div>
