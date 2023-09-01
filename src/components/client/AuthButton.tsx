@@ -2,13 +2,13 @@ import { signIn, signOut } from "next-auth/react"
 
 type ButtonProps = {
   isAuthed?: boolean
-  children: React.ReactNode
-}
+} & Omit<React.ComponentProps<"button">, "onClick">
 
-export const AuthButton = ({ isAuthed = false, children }: ButtonProps) => {
+export const AuthButton = ({ isAuthed = false, ...props }: ButtonProps) => {
   return (
-    <button onClick={() => (isAuthed ? signOut() : signIn("google"))}>
-      {children}
-    </button>
+    <button
+      {...props}
+      onClick={() => (isAuthed ? signOut() : signIn("google"))}
+    />
   )
 }

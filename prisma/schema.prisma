@@ -76,8 +76,8 @@ model Day {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Week      Week?    @relation(fields: [weekId], references: [id])
-  weekId    Int?
+  week      Week     @relation(fields: [weekId], references: [id])
+  weekId    Int
 
   @@index([userId])
   @@index([weekId])

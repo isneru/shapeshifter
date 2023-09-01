@@ -1,6 +1,8 @@
-import "@/styles/globals.css"
+import { Navbar, WeekResetModalWrapper } from "@/components/server"
 import type { Metadata } from "next"
 import { PropsWithChildren } from "react"
+
+import "@/styles/globals.css"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -10,7 +12,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+        <WeekResetModalWrapper />
+      </body>
     </html>
   )
 }

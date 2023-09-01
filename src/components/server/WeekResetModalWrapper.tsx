@@ -1,6 +1,7 @@
 import { WeekResetModal } from "@/components/client"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/db"
+import { isDateInSameWeek } from "@/lib/utils"
 import { getServerSession } from "next-auth"
 
 export const WeekResetModalWrapper = async () => {
@@ -19,5 +20,16 @@ export const WeekResetModalWrapper = async () => {
 
   if (!foundUser) return <></>
 
-  return <WeekResetModal userHasWeeks={foundUser.weeks.length > 1} />
+  if (foundUser.weeks.length > 0) {
+    const userLastWeek = foundUser.weeks[foundUser.weeks.length - 1]
+
+    if (isDateInSameWeek(userLastWeek.createdAt)) return <></>
+  }
+
+  return (
+    <WeekResetModal
+      userId={session.user.id}
+      userHasWeeks={foundUser.weeks.length > 0}
+    />
+  )
 }
