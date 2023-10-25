@@ -25,9 +25,5 @@ export default async function Home() {
 
   if (!lastWeek) return <></>
 
-  return (
-    <div className="grid h-screen grid-rows-[7] gap-4 px-8 py-6 xl:grid-cols-7 xl:grid-rows-1">
-      <WeekBoard lastWeek={lastWeek} />
-    </div>
-  )
+  return <WeekBoard lastWeek={lastWeek} />
 }

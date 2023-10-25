@@ -7,7 +7,7 @@ export const Sidebar = async () => {
   const session = await getServerSession(authOptions)
 
   return (
-    <nav className="flex h-screen min-w-[40px] max-w-[40px] flex-col items-center bg-neutral-800 p-2">
+    <nav className="fixed flex h-screen min-w-[40px] max-w-[40px] flex-col items-center bg-neutral-800 p-2">
       <AuthButton
         hasPopover
         className="mt-auto flex h-6 w-6 items-center justify-center rounded transition-colors hover:bg-neutral-700"

@@ -14,7 +14,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <body className="flex">
         <Sidebar />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow pl-10">{children}</main>
         <WeekResetModalContainer />
       </body>
     </html>
