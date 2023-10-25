@@ -6,9 +6,11 @@ import { getServerSession } from "next-auth"
 export default async function Home() {
   const session = await getServerSession(authOptions)
 
+  if (!session) return <></>
+
   const foundUser = await prisma.user.findUnique({
     where: {
-      id: session?.user.id
+      id: session.user.id
     },
     include: {
       weeks: {
