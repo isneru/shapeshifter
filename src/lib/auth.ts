@@ -1,8 +1,8 @@
-import { env } from "@/env.mjs";
-import { prisma } from "@/lib/db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { type DefaultSession, type NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import { env } from "@/env.mjs"
+import { prisma } from "@/lib/db"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { type DefaultSession, type NextAuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -11,18 +11,16 @@ import GoogleProvider from "next-auth/providers/google";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
+  interface User {
+    id: string
+    name: string
+    email: string
+    image?: string
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface Session extends DefaultSession {
+    user: User
+  }
 }
 
 /**
@@ -36,16 +34,16 @@ export const authOptions: NextAuthOptions = {
       ...session,
       user: {
         ...session.user,
-        id: user.id,
-      },
-    }),
+        id: user.id
+      }
+    })
   },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
+      clientSecret: env.GOOGLE_CLIENT_SECRET
+    })
     /**
      * ...add more providers here.
      *
@@ -55,5 +53,5 @@ export const authOptions: NextAuthOptions = {
      *
      * @see https://next-auth.js.org/providers/github
      */
-  ],
-};
+  ]
+}

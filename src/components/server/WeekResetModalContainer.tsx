@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db"
 import { isDateInSameWeek } from "@/lib/utils"
 import { getServerSession } from "next-auth"
 
-export const WeekResetModalWrapper = async () => {
+export const WeekResetModalContainer = async () => {
   const session = await getServerSession(authOptions)
 
   if (!session) return <></>

@@ -1,2 +1,2 @@
-export * from "./Navbar"
-export * from "./WeekResetModalWrapper"
+export * from "./Sidebar"
+export * from "./WeekResetModalContainer"

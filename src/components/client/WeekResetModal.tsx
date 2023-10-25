@@ -1,6 +1,5 @@
 import { createNewWeek, repeatWeek } from "@/actions"
 import * as Dialog from "@radix-ui/react-dialog"
-import { useRouter } from "next/navigation"
 
 type WeekResetModalProps = {
   userHasWeeks: boolean
@@ -11,8 +10,6 @@ export const WeekResetModal = ({
   userHasWeeks,
   userId
 }: WeekResetModalProps) => {
-  const router = useRouter()
-
   return (
     <Dialog.Root defaultOpen>
       <Dialog.Overlay className="fixed inset-0 z-40 grid h-screen w-screen place-items-center bg-black/20 data-[state=closed]:animate-[overlayHide_100ms] data-[state=open]:animate-[overlayShow_150ms]">
@@ -25,14 +22,14 @@ export const WeekResetModal = ({
           <div className="mt-auto flex w-full flex-col items-center gap-3 font-semibold">
             <button
               data-user-has-weeks={userHasWeeks}
-              onClick={() => createNewWeek(userId).then(router.refresh)}
+              onClick={() => createNewWeek(userId)}
               className="flex w-full items-center justify-center rounded bg-neutral-800 py-2 outline-none transition-colors data-[user-has-weeks=false]:bg-violet-600 data-[user-has-weeks=false]:hover:bg-violet-700"
             >
               Create New Week
             </button>
             {userHasWeeks && (
               <button
-                onClick={() => repeatWeek(userId).then(router.refresh)}
+                onClick={() => repeatWeek(userId)}
                 className="flex w-full items-center justify-center rounded bg-violet-600 py-2 outline-none transition-colors hover:bg-violet-700"
               >
                 Repeat Last Week&apos;s Activities

@@ -1,4 +1,4 @@
-import { Navbar, WeekResetModalWrapper } from "@/components/server"
+import { Sidebar, WeekResetModalContainer } from "@/components/server"
 import type { Metadata } from "next"
 import { PropsWithChildren } from "react"
 
@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body>
-        <Navbar />
-        {children}
-        <WeekResetModalWrapper />
+      <body className="flex">
+        <Sidebar />
+        <main className="flex-grow">{children}</main>
+        <WeekResetModalContainer />
       </body>
     </html>
   )
