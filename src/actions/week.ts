@@ -22,16 +22,6 @@ export async function repeatWeek(userId: string) {
   const foundUserWeeks = await prisma.week.findMany({
     where: {
       userId
-    },
-    orderBy: {
-      id: "asc"
-    },
-    include: {
-      days: {
-        include: {
-          fields: true
-        }
-      }
     }
   })
 
@@ -39,16 +29,12 @@ export async function repeatWeek(userId: string) {
 
   const lastWeek = foundUserWeeks[foundUserWeeks.length - 1]
 
-  await prisma.week.create({
+  await prisma.week.update({
+    where: {
+      id: lastWeek.id
+    },
     data: {
-      userId,
-      days: {
-        createMany: {
-          data: lastWeek.days.map((day) => ({
-            userId
-          }))
-        }
-      }
+      createdAt: new Date()
     }
   })
 

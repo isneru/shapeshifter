@@ -1,6 +1,3 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-
 export function isDateInSameWeek(date: Date) {
   const today = new Date()
   const todayDate = today.getDate()
@@ -14,16 +11,24 @@ export function isDateInSameWeek(date: Date) {
   return firstDayOfWeek < date && date < lastDayOfWeek
 }
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+export function getWeekDays(startsMonday: boolean) {
+  return startsMonday
+    ? ([
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ] as const)
+    : ([
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ] as const)
 }
-
-export const weekDays = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday"
-] as const

@@ -1,9 +1,7 @@
 import * as Tooltip from "@radix-ui/react-tooltip"
-import clsx from "clsx"
-import { AnimatePresence, m } from "framer-motion"
 import { ReactNode, useState } from "react"
 
-interface TooltipPopoverProps {
+type TooltipPopoverProps = {
   label: string
   children: ReactNode
   side?: "top" | "right" | "bottom" | "left"

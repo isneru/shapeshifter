@@ -15,7 +15,11 @@ export default async function Home() {
     include: {
       weeks: {
         include: {
-          days: true
+          days: {
+            include: {
+              fields: true
+            }
+          }
         }
       }
     }
@@ -27,5 +31,10 @@ export default async function Home() {
 
   if (!lastWeek) return <></>
 
-  return <WeekBoard lastWeek={lastWeek} />
+  return (
+    <WeekBoard
+      lastWeek={lastWeek}
+      weekStartsMonday={foundUser.prefersWeekToStartMonday}
+    />
+  )
 }

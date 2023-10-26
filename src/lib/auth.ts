@@ -11,15 +11,13 @@ import GoogleProvider from "next-auth/providers/google"
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface User {
-    id: string
-    name: string
-    email: string
-    image?: string
-  }
-
   interface Session extends DefaultSession {
-    user: User
+    user: {
+      id: string
+      name: string
+      email: string
+      image?: string
+    }
   }
 }
 

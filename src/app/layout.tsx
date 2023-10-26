@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { PropsWithChildren } from "react"
 
 import "@/styles/globals.css"
+import { NewFieldModal } from "@/components/client"
 
 export const metadata: Metadata = {
   title: "Create Next App",
