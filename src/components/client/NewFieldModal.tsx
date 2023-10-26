@@ -15,8 +15,8 @@ export const NewFieldModal = ({ dayId, setIsAdding }: NewFieldModalProps) => {
   return (
     <Dialog.Root
       defaultOpen
-      onOpenChange={(e) => {
-        setIsOpen(e)
+      onOpenChange={(val) => {
+        setIsOpen(val)
         setValue("")
         setObservation("")
         setIsAdding(undefined)

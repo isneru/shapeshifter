@@ -50,9 +50,9 @@ export const WeekBoard = ({ lastWeek, weekStartsMonday }: WeekBoardProps) => {
               </button>
             </TooltipPopover>
           </div>
-          {day.fields.map((field) => (
+          {day.fields.map((field, i) => (
             <div
-              key={field.id}
+              key={i}
               className="mx-3 rounded bg-neutral-900 p-2 transition-colors hover:bg-neutral-800"
             >
               <p className="text-lg font-semibold">{field.value}</p>
